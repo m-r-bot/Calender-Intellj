@@ -3,8 +3,9 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class GeneralPainter {
+
+
     public static Holiday holidayManager = new Holiday();
-    private int year; 
 
 
     //ide:create
@@ -59,7 +60,7 @@ public class GeneralPainter {
         return sb.toString();
     }
 
-    public String appendYear(year){
+    public String appendYear(int year){
         StringBuilder sb = new StringBuilder();
         sb.append("<text x=\"2508.5715\" y=\"154.06075\" font-size:266.66665649px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:\"1\" fill=;
         sb.append("

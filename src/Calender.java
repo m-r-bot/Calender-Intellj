@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 public class Calender {
 
     public static void main(String[] args) {
-        GeneralPainter generalPainter = new GeneralPainter();
 
         //read user input
         int year;
@@ -16,6 +15,8 @@ public class Calender {
         //System.out.println("F�r welches Jahr soll der Kalender erstellt werden? "); //side quest: figure out "encoding utf8 module"
         //year = scan.nextInt();
         year = 2023;
+
+        GeneralPainter generalPainter = new GeneralPainter();
 
         try {
             File file = new File("Calender.svg");
@@ -30,6 +31,7 @@ public class Calender {
 
             pw.println(generalPainter.appendTransform());
             pw.println(generalPainter.appendHeader());
+            pw.println(generalPainter.appendYear(year));
 
 
             final YearMonth firstMonth = YearMonth.of(year, 1);
