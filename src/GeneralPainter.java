@@ -2,8 +2,10 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class Painter {
+public class GeneralPainter {
     public static Holiday holidayManager = new Holiday();
+    private int year; 
+
 
     //ide:create
     public String appendProps(String tagStart) {
@@ -56,40 +58,14 @@ public class Painter {
         sb.append("       y=\"-397\" />");
         return sb.toString();
     }
-    // ids are visible when clicking on the object in the svg file in inkspace
 
-    public String appendRect(LocalDate date,boolean sameYear) {
-        String whiteHex = "#ffffff";
-        String mediumBlueHex =  "#009ff3";
-        String fillColor = !holidayManager.isFeiertag(date)  ? whiteHex : mediumBlueHex;
-        fillColor = (date.getDayOfWeek().getValue() == 6 ||  date.getDayOfWeek().getValue() == 7) ? mediumBlueHex : fillColor;
-
-        int month = sameYear ? date.getMonthValue() : date.getMonthValue() + 12;
-        int day = date.getDayOfMonth();
-        int width = 75;
-        int height = 15;
-
-        int x = ((month-1) * width) + 12;
-        int y = ((day-1) * height) - 264;
-
-        String displayedDay = day + " " + date.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.GERMANY);
-        int x_bez = (int) (x + 0.13*width);
-        int y_bez = (int) (y + 0.66*height);
-
+    public String appendYear(year){
         StringBuilder sb = new StringBuilder();
-        sb.append("<g>");
-        sb.append("<rect ");
+        sb.append("<text x=\"2508.5715\" y=\"154.06075\" font-size:266.66665649px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:\"1\" fill=;
+        sb.append("
+        sb.append("x=\"2508.5715\"\n");
+        sb.append("y=\"154.06075\"");
 
-        sb.append(" style=\"fill:"+fillColor+ ";fill-opacity:1;stroke:#000000;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1\"");
-        sb.append(" x=\"" + x + "\"");
-        sb.append(" y=\"" + y + "\"");
-        sb.append(" width=\"75\"");
-        sb.append(" height=\"15\"");
-        sb.append("/rect>");
-        sb.append("<text x=\"" + x_bez +"\" y=\""+ y_bez+"\" font-family=\"sans-serif\" font-size=\"26.6\" fill=\"#00457c\">"+ displayedDay + "</text>");
-        //sb.append ("text x=\"" + x + "\" y=\"" + y + "\" font-family=\"sans-serif\" font-size=\"26.6\" fill=\"#00457c\">"+ tagBez + "</text>");
-        sb.append("</g>");
-        return sb.toString();
     }
 
     public  String appendFooter() {
@@ -101,7 +77,7 @@ public class Painter {
         sb.append("width=\"975\"\r\n");
         sb.append("height=\"61.999996\"\r\n");
         sb.append("x=\"12\"\r\n");
-        sb.append("y=\"215.99997\" /> ");
+        sb.append("y=\"215.99997\" /> </g>");
         return sb.toString();
     }
 

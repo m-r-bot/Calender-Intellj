@@ -1,18 +1,22 @@
 
 import java.io.File;
+import java.time.YearMonth;
 import java.util.Scanner; //Import File class
 import java.io.IOException; //Import to handle errors
 import java.io.PrintWriter;
-import java.time.LocalDate;
 
 public class Calender {
 
     public static void main(String[] args) {
-        Painter painter = new Painter();
-        int year = 0;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("F�r welches Jahr soll der Kalender erstellt werden? ");
-        year = scan.nextInt();
+        GeneralPainter generalPainter = new GeneralPainter();
+
+        //read user input
+        int year;
+        //var scan = new Scanner(System.in);
+        //System.out.println("F�r welches Jahr soll der Kalender erstellt werden? "); //side quest: figure out "encoding utf8 module"
+        //year = scan.nextInt();
+        year = 2023;
+
         try {
             File file = new File("Calender.svg");
 
@@ -22,27 +26,29 @@ public class Calender {
             PrintWriter pw = new PrintWriter(file); //
             // pw = new PrintWriter(System.out);
 
-            pw.println(painter.appendProps("<svg"));
+            pw.println(generalPainter.appendProps("<svg"));
 
-            pw.println(painter.appendTransform());
-            pw.println(painter.appendHeader());
+            pw.println(generalPainter.appendTransform());
+            pw.println(generalPainter.appendHeader());
 
 
-
-            for (int month = 1; month < 14; month++) {
+            final YearMonth firstMonth = YearMonth.of(year, 1);
+            for (int month = 0; month < 13; month++) {
                 // Map months of value above 12 to next year
-                LocalDate firstOfMonth = month <= 12 ? LocalDate.of(year,month,1): LocalDate.of(year+1,month-12,1);
-                for(int day = 0; day<firstOfMonth.lengthOfMonth(); day++){
-                    LocalDate tag = LocalDate.of(firstOfMonth.getYear(),firstOfMonth.getMonth(),day+1);
-                    pw.println(painter.appendRect(tag,year==tag.getYear()));
-                }
+                YearMonth currentMonth = firstMonth.plusMonths(month);
+                int currentX = ((month) * 75) + 12;
+                var currentMonthPainter = new MonthColumnPainter(currentMonth, currentX, currentMonth.getYear() == year); // var = lokale Typinferenz
+                pw.println(currentMonthPainter.createRectanglesForMonth());
+
             }
 
-            pw.println(painter.appendFooter());
+            pw.println(generalPainter.appendFooter());
             pw.println("</svg>");
             pw.close();
             System.out.println("File was successfully created at " + file.getCanonicalPath());
         }
+
+
 
         catch (IOException e) {
             e.printStackTrace();
