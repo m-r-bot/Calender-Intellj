@@ -9,7 +9,8 @@ public class MonthColumnPainter {
     private final boolean sameYear;
     private Holiday holidayManager = new Holiday();
 
-    public MonthColumnPainter(YearMonth month, int xCoordinate, boolean sameYear) {
+    public
+    (YearMonth month, int xCoordinate, boolean sameYear) {
         this.month = month;
         this.xCoordinate = xCoordinate;
         this.sameYear = sameYear;

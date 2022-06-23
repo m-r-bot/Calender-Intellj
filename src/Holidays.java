@@ -19,7 +19,7 @@ public class Holidays {
     }
 
         public boolean isHoliday(LocalDate date){
-            Optional<Feiertag> optionalHoliday = this.feiertage.stream().filter( (ft) -> ft.date == date).findFirst();
+            Optional<Feiertag> optionalHoliday = this.feiertage.stream().filter( (ft) -> ft.date.equals(date)).findFirst();
             return optionalHoliday.isPresent();
         }
 
