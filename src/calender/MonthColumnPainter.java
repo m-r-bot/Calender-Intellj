@@ -1,3 +1,7 @@
+package calender;
+
+import calender.Holiday;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -9,7 +13,7 @@ public class MonthColumnPainter {
     private final boolean sameYear;
     private Holiday holidayManager = new Holiday();
 
-    public
+    public MonthColumnPainter
     (YearMonth month, int xCoordinate, boolean sameYear) {
         this.month = month;
         this.xCoordinate = xCoordinate;
@@ -88,5 +92,4 @@ public class MonthColumnPainter {
         return result.toString();
     }
 
-    //private String createTextForMonth (){}
 }

@@ -1,10 +1,14 @@
+package calender;
+
+import calender.Feiertag;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 // given year
-// calculate the holidays only as such -> it's only of interest that x days is Feiertag and it is called Y
+// calculate the holidays only as such -> it's only of interest that x days is calender.Feiertag and it is called Y
 // holidys is either sachsen sp. or non-sachsen sp.
 
 public class Holidays {
@@ -73,7 +77,7 @@ public class Holidays {
             final String NV = "Nordrhein-Westfalen";
             final String NI = "Niedersachsen";
 
-            // Fixed Holidays
+            // Fixed calender.Holidays
             final LocalDate NEUJAHR = LocalDate.of(year, Month.JANUARY, 1);
             final LocalDate HEILIGE_DER_DREI_KOENIGE = LocalDate.of(year, Month.JANUARY, 6);
             final LocalDate FRAUEN_TAG = LocalDate.of(year, Month.MARCH, 8);
@@ -86,7 +90,7 @@ public class Holidays {
             final LocalDate ERSTER_WEIHNACHTSTAG = LocalDate.of(year, Month.DECEMBER, 25);
             final LocalDate ZWEITER_WEIHNACHTSTAG = ERSTER_WEIHNACHTSTAG.plusDays(1);
 
-            // Easter-based Holidays
+            // Easter-based calender.Holidays
             final LocalDate OSTER_SONNTAG = calculateEasterDate(year);
             final LocalDate OSTER_MONTAG = OSTER_SONNTAG.plusDays(1);
             final LocalDate KAR_FREITAG = OSTER_SONNTAG.minusDays(2);

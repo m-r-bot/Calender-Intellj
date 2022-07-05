@@ -1,7 +1,10 @@
+package calender;
+
+import calender.GeneralPainter;
+import calender.MonthColumnPainter;
 
 import java.io.File;
 import java.time.YearMonth;
-import java.util.Scanner; //Import File class
 import java.io.IOException; //Import to handle errors
 import java.io.PrintWriter;
 
@@ -19,7 +22,7 @@ public class Calender {
         GeneralPainter generalPainter = new GeneralPainter();
 
         try {
-            File file = new File("Calender.svg");
+            File file = new File("calender.Calender.svg");
 
             file.createNewFile();
             // create new file granted no one exists
@@ -31,7 +34,7 @@ public class Calender {
 
             pw.println(generalPainter.appendTransform());
             pw.println(generalPainter.appendHeader());
-            pw.println(generalPainter.appendYear(year));
+            //pw.println(generalPainter.appendYear(year));
 
 
             final YearMonth firstMonth = YearMonth.of(year, 1);
