@@ -1,0 +1,39 @@
+    class Calendar{
+        init/(){
+            initAll()
+        }
+        Month months[] 12 Elemene
+
+        draw(){
+        for each (day)
+            SVGBuilder().drawday(day)
+        }
+    }
+
+    SVGBuilder(){
+        draw(Day day){
+            createRec(str day.label)
+        }
+    }
+
+    class Month {
+        constructor(){
+            initDays()
+        }
+        Day days[]
+
+        int MonthOfYear
+        str labelMonth
+    }
+
+    class Day {
+        int dayOfMonth
+        str label
+        bool isHollyday
+
+        // idea
+
+        str generateSVGString(){
+            return '<svg path="this.dayOfMonth" />'
+        }
+    }

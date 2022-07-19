@@ -1,7 +1,4 @@
-package calender;
-
-import calender.GeneralPainter;
-import calender.MonthColumnPainter;
+package de.itemis.calender;
 
 import java.io.File;
 import java.time.YearMonth;
@@ -34,7 +31,6 @@ public class Calender {
 
             pw.println(generalPainter.appendTransform());
             pw.println(generalPainter.appendHeader());
-            //pw.println(generalPainter.appendYear(year));
 
 
             final YearMonth firstMonth = YearMonth.of(year, 1);

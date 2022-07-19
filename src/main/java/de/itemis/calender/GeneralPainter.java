@@ -1,8 +1,4 @@
-package calender;
-
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.Locale;
+package de.itemis.calender;
 
 public class GeneralPainter {
 

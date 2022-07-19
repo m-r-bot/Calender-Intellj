@@ -1,6 +1,4 @@
-package calender;
-
-import calender.Feiertag;
+package de.itemis.calender;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -15,7 +13,9 @@ public class Holidays {
 
     List<Feiertag> feiertage;
 
+
     public Holidays(int year){
+
         List<Feiertag> feiertage = new ArrayList<>();
 
         feiertage = determineGermanHolidays(year);

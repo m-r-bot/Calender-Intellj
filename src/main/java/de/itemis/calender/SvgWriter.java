@@ -1,4 +1,4 @@
-package calender;
+package de.itemis.calender;
 
 import java.io.File;
 import java.io.FileNotFoundException;
