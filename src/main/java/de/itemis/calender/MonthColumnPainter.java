@@ -29,8 +29,6 @@ public class MonthColumnPainter {
 
         int day = date.getDayOfMonth();
 
-        Holiday holidayManager = null;
-
         int x = currentX;
         int y = ((day-1) * 15) - 264;
         int width = 75;
@@ -72,7 +70,7 @@ public class MonthColumnPainter {
         return sb.toString();
     }
 
-    private String createTextForMonth(LocalDate date) {
+    private String createTextForMonth() {
         var label = new StringBuilder();
         String monthHeader = String.valueOf(month.getMonth()).substring(0,3);
         label.append("<text x=\"").append(currentX).append("\" y=\"-265\" font-family=\"sans-serif\" font-size=\"26,6px\" line-height=\"1.25\" fill=\"#00457c\">").append(monthHeader).append("</text>");
@@ -83,7 +81,7 @@ public class MonthColumnPainter {
         var result = new StringBuilder();
         for(int day = 1; day<=month.lengthOfMonth(); day++){
             LocalDate tag = LocalDate.of(month.getYear(), month.getMonth(), day);
-            result.append(this.createTextForMonth(tag));
+            result.append(this.createTextForMonth());
             result.append(this.createRectanglesForDay(tag, sameYear));
         }
         return result.toString();

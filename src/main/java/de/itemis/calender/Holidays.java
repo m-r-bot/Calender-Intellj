@@ -154,5 +154,10 @@ public class Holidays {
 
             return feiertage;
         }
+
+       /* public boolean isSachsenHoliday (LocalDate date){
+            Optional<Feiertag> SachsenHoliday = this.feiertage.
+            return SachsenHoliday.isPresent();
+        }*/
     }
 

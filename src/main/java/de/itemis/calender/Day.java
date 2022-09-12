@@ -6,13 +6,13 @@ import java.util.Locale;
 
 public class Day {
 
-    private Holiday holidayManager = new Holiday();
-    static private SVGFormatter svgFormatter = new SVGFormatter();
-
-    int day, month, x, y;
+    int day, month, year, x, y;
     static int width = 75, height = 15;
-    private String Label;
-    private String Colour;
+    public String Label;
+    public String Colour; //should prob be private, change after constructor bug is fixed
+
+    private Holidays holidayManager = new Holidays (year);
+    static private SVGFormatter svgFormatter = new SVGFormatter();
 
     public Day (LocalDate date) {
 
@@ -26,8 +26,7 @@ public class Day {
         this.Colour = generateColour(date);
     }
 
-
-    private String generateColour(LocalDate date){
+    public String generateColour(LocalDate date){
 
         //define colours used in calender
         String whiteHex = "#ffffff";
@@ -36,9 +35,10 @@ public class Day {
         String darkBlueText = "#00457c";
 
         //determines if it is a holiday and a weekend day
-        String fillColor = !holidayManager.isFeiertag(date)  ? whiteHex : mediumBlueHex;
-        fillColor = (date.getDayOfWeek().getValue() == 6 ||  date.getDayOfWeek().getValue() == 7) ? mediumBlueHex : fillColor;
-        return fillColor;
+        String fillColour = !holidayManager.isHoliday(date)  ? whiteHex : mediumBlueHex;
+        fillColour = holidayManager.feiertage.contains(date) ? lightBlueHex : fillColour;
+        fillColour = (date.getDayOfWeek().getValue() == 6 ||  date.getDayOfWeek().getValue() == 7) ? mediumBlueHex : fillColour;
+        return fillColour;
     }
 
     private String generateLabel (LocalDate date){
@@ -73,7 +73,7 @@ public class Day {
         return sb.toString();
     }
 
-    private String drawSVG (){
+    public String drawSVGForDay (){
         StringBuilder sb = new StringBuilder();
 
         sb.append("<g>");
@@ -81,8 +81,8 @@ public class Day {
         sb.append("style=\" fill:").append(this.Colour).append(svgFormatter.fillElements);
         sb.append(" x=\"").append(x).append("\"");
         sb.append(" y=\"").append(y).append("\"");
-        sb.append(" width=\"" + width + "\""); // TODO ask Roalnd why SonarLint wants chained append instead of concatenated function
-        sb.append(" height=\"" + height + "\"");
+        sb.append(" width=\"").append(width).append("\"");
+        sb.append(" height=\"").append(height).append("\"");
         sb.append("/>");
         sb.append(this.Label);
         sb.append("</g>");

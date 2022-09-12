@@ -12,4 +12,6 @@ public class Feiertag {
         this.belongsToSachsen = belongsToSachsen;
         this.date = date;
     }
+
+
 }

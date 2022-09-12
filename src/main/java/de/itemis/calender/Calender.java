@@ -38,8 +38,8 @@ public class Calender {
                 // Map months of value above 12 to next year
                 YearMonth currentMonth = firstMonth.plusMonths(month);
                 int currentX = ((month) * 75) + 12;
-                var currentMonthPainter = new MonthColumnPainter(currentMonth, currentX, currentMonth.getYear() == year); // var = lokale Typinferenz
-                pw.println(currentMonthPainter.createRectanglesForMonth());
+                var currentMonthObject = new Month(currentMonth, currentX, currentMonth.getYear() == year); // var = lokale Typinferenz
+                pw.println(currentMonthObject.drawSVGForMonth());
 
             }
 
