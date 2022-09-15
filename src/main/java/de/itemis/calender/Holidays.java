@@ -11,21 +11,35 @@ import java.util.*;
 
 public class Holidays {
 
-    List<Feiertag> feiertage;
-
+    //initializes an ArrayList that stores values of type Feiertag as defined in class Feiertag
+    List<Feiertag> holidays = new ArrayList<>();
 
     public Holidays(int year){
-
-        List<Feiertag> feiertage = new ArrayList<>();
-
-        feiertage = determineGermanHolidays(year);
-        feiertage.addAll(determineGermanHolidays(year+1));
+        //adds statically stored German holidays to holiday list for the current and following year
+        holidays.addAll(determineGermanHolidays(year));
+        holidays.addAll(determineGermanHolidays(year+1));
     }
 
-        public boolean isHoliday(LocalDate date){
-            Optional<Feiertag> optionalHoliday = this.feiertage.stream().filter( (ft) -> ft.date.equals(date)).findFirst();
-            return optionalHoliday.isPresent();
+        //determines if given date is a holiday
+    public boolean isHoliday(LocalDate date){
+        Optional<Feiertag> optionalHoliday = this.holidays.stream().filter( (item) -> item.date.equals(date)).findAny();
+        return optionalHoliday.isPresent();
+    }
+
+    public boolean isSachsenHoliday(LocalDate date){
+        Optional<Feiertag> optionalHoliday = this.holidays.stream().filter( (item) -> item.date.equals(date)).findAny();
+        //als ob es keinen einfacheren Weg gibt als da eine doppelkonditon einzubauen
+        //optionalSachsenHoliday = this.determineGermanHolidays(date.getYear()).stream().filter( (item) -> item.)
+        Optional <Feiertag> optionalSachsenHoliday = optionalHoliday.filter(new Feiertag(get))
+        return optionalSachsenHoliday.isPresent();
+    }
+
+        //TODO create boolean belongs to sachsen with locHolidays Hashmap
+        public boolean isNotSachsenHoliday(LocalDate date){
+            return false;
         }
+
+
 
         public static LocalDate calculateEasterDate(int year) {
             // Gaußsche Osterformel
@@ -58,7 +72,6 @@ public class Holidays {
          *           to the past (Before it was declared)
          */
         public List<Feiertag> determineGermanHolidays(int year) {
-            final String DE = "Deutschland";
             final String BW = "Baden-Württemberg";
             final String BY = "Bayern";
             final String ST = "Sachsen-Anhalt";
@@ -79,7 +92,7 @@ public class Holidays {
 
             // Fixed calender.Holidays
             final LocalDate NEUJAHR = LocalDate.of(year, Month.JANUARY, 1);
-            final LocalDate HEILIGE_DER_DREI_KOENIGE = LocalDate.of(year, Month.JANUARY, 6);
+            final LocalDate HEILIGE_DREI_KOENIGE = LocalDate.of(year, Month.JANUARY, 6);
             final LocalDate FRAUEN_TAG = LocalDate.of(year, Month.MARCH, 8);
             final LocalDate TAG_DER_ARBEIT = LocalDate.of(year, Month.MAY, 1);
             final LocalDate MARIA_HIMMELFAHRT = LocalDate.of(year, Month.AUGUST, 15);
@@ -103,61 +116,55 @@ public class Holidays {
                     .with(TemporalAdjusters.previous(DayOfWeek.WEDNESDAY));
 
             // National (federal) holidays, as in 2022
-            Map<String, LocalDate> bundeseinheitlicheFeiertage = new HashMap<>();
-            bundeseinheitlicheFeiertage.put("Neujahr", NEUJAHR);
-            bundeseinheitlicheFeiertage.put("Karfreitag", KAR_FREITAG);
-            bundeseinheitlicheFeiertage.put("Ostermontag", OSTER_MONTAG);
-            bundeseinheitlicheFeiertage.put("Christi Himmelfahrt", CHRISTI_HIMMEL_FAHRT);
-            bundeseinheitlicheFeiertage.put("Pfingstmontag", PFINGST_MONTAG);
-            bundeseinheitlicheFeiertage.put("Tag der Arbeit", TAG_DER_ARBEIT);
-            bundeseinheitlicheFeiertage.put("Tag der Deutschen Einheit", TAG_DER_DEUTSCHEN_EINHEIT);
-            bundeseinheitlicheFeiertage.put("Erster Weihnachtstag", ERSTER_WEIHNACHTSTAG);
-            bundeseinheitlicheFeiertage.put("Zweiter Weihnachtstag", ZWEITER_WEIHNACHTSTAG);
+            Map<String, LocalDate> fedHolidays = new HashMap<>();
+            fedHolidays.put("Neujahr", NEUJAHR);
+            fedHolidays.put("Karfreitag", KAR_FREITAG);
+            fedHolidays.put("Ostermontag", OSTER_MONTAG);
+            fedHolidays.put("Christi Himmelfahrt", CHRISTI_HIMMEL_FAHRT);
+            fedHolidays.put("Pfingstmontag", PFINGST_MONTAG);
+            fedHolidays.put("Tag der Arbeit", TAG_DER_ARBEIT);
+            fedHolidays.put("Tag der Deutschen Einheit", TAG_DER_DEUTSCHEN_EINHEIT);
+            fedHolidays.put("Erster Weihnachtstag", ERSTER_WEIHNACHTSTAG);
+            fedHolidays.put("Zweiter Weihnachtstag", ZWEITER_WEIHNACHTSTAG);
 
             // Date of local holidays.
-            Map<String, LocalDate> laenderspezifischeFeiertage = new HashMap<>();
-            laenderspezifischeFeiertage.put("Heilige Drei Könige", HEILIGE_DER_DREI_KOENIGE);
-            laenderspezifischeFeiertage.put("Frauen Tag", FRAUEN_TAG);
-            laenderspezifischeFeiertage.put("Buß- und Bettag", BUSS_UND_BETTAG);
-            laenderspezifischeFeiertage.put("Weltkindertag", WELT_KINDER_TAG);
-            laenderspezifischeFeiertage.put("Ostersonntag", OSTER_SONNTAG);
-            laenderspezifischeFeiertage.put("Pfingstsonntag", PFINGST_SONNTAG);
-            laenderspezifischeFeiertage.put("Fronleichnam", FRONLEICHNAM);
-            laenderspezifischeFeiertage.put("Mariä Himmelfahrt", MARIA_HIMMELFAHRT);
-            laenderspezifischeFeiertage.put("Reformationstag", REFORMATIONSTAG);
-            laenderspezifischeFeiertage.put("Allerheiligen", ALLERHEILIGEN);
+            Map<String, LocalDate> locHolidays = new HashMap<>();
+            locHolidays.put("Heilige Drei Könige", HEILIGE_DREI_KOENIGE);
+            locHolidays.put("Frauen Tag", FRAUEN_TAG);
+            locHolidays.put("Buß- und Bettag", BUSS_UND_BETTAG);
+            locHolidays.put("Weltkindertag", WELT_KINDER_TAG);
+            locHolidays.put("Ostersonntag", OSTER_SONNTAG);
+            locHolidays.put("Pfingstsonntag", PFINGST_SONNTAG);
+            locHolidays.put("Fronleichnam", FRONLEICHNAM);
+            locHolidays.put("Mariä Himmelfahrt", MARIA_HIMMELFAHRT);
+            locHolidays.put("Reformationstag", REFORMATIONSTAG);
+            locHolidays.put("Allerheiligen", ALLERHEILIGEN);
 
             // Regions of local holidays.
-            Map<String, List<String>> laenderspezifischeFeiertageRegionen = new HashMap<>();
-            laenderspezifischeFeiertageRegionen.put("Heilige Drei Könige", Arrays.asList(BW, BY, ST));
-            laenderspezifischeFeiertageRegionen.put("Frauen Tag", Arrays.asList(BE));
-            laenderspezifischeFeiertageRegionen.put("Buß- und Bettag", Arrays.asList(SN));
-            laenderspezifischeFeiertageRegionen.put("Weltkindertag", Arrays.asList(TH));
-            laenderspezifischeFeiertageRegionen.put("Ostersonntag", Arrays.asList(BB));
-            laenderspezifischeFeiertageRegionen.put("Pfingstsonntag", Arrays.asList(BB));
-            laenderspezifischeFeiertageRegionen.put("Fronleichnam", Arrays.asList(BW, BY, HE, ST, NW, RP, SL));
-            laenderspezifischeFeiertageRegionen.put("Mariä Himmelfahrt", Arrays.asList(SL));
-            laenderspezifischeFeiertageRegionen.put("Reformationstag",
-                    Arrays.asList(BB, HE, HB, HH, MV, NI, SN, ST, SH, TH));
-            laenderspezifischeFeiertageRegionen.put("Allerheiligen", Arrays.asList(BW, BY, NV, RP, SL));
+            Map<String, List<String>> locHolidaysRegions = new HashMap<>();
+            locHolidaysRegions.put("Heilige Drei Könige", Arrays.asList(BW, BY, ST));
+            locHolidaysRegions.put("Frauen Tag", Arrays.asList(BE));
+            locHolidaysRegions.put("Buß- und Bettag", Arrays.asList(SN));
+            locHolidaysRegions.put("Weltkindertag", Arrays.asList(TH));
+            locHolidaysRegions.put("Ostersonntag", Arrays.asList(BB));
+            locHolidaysRegions.put("Pfingstsonntag", Arrays.asList(BB));
+            locHolidaysRegions.put("Fronleichnam", Arrays.asList(BW, BY, HE, ST, NW, RP, SL));
+            locHolidaysRegions.put("Mariä Himmelfahrt", Arrays.asList(SL));
+            locHolidaysRegions.put("Reformationstag", Arrays.asList(BB, HE, HB, HH, MV, NI, SN, ST, SH, TH));
+            locHolidaysRegions.put("Allerheiligen", Arrays.asList(BW, BY, NV, RP, SL));
 
-            List<Feiertag> feiertage = new ArrayList<>();
-
-            bundeseinheitlicheFeiertage.forEach((feiertag, datum) -> {
-                feiertage.add(new Feiertag(feiertag,true,datum));
+            //adds federal holidays to holidays list
+            fedHolidays.forEach((feiertag, datum) -> {
+                holidays.add(new Feiertag(feiertag,true,datum));
             });
 
-            // TODO : handle Buß- und Bettag // Reformationstag
-            laenderspezifischeFeiertage.forEach((feiertag, datum) -> {
-                feiertage.add(new Feiertag(feiertag,false,datum));
+            // TODO : handle Buß- und Bettag // Reformationstag using if statement
+            locHolidays.forEach((feiertag, datum) -> {
+                holidays.add(new Feiertag(feiertag,false,datum));
             });
 
-            return feiertage;
+            return holidays;
         }
 
-       /* public boolean isSachsenHoliday (LocalDate date){
-            Optional<Feiertag> SachsenHoliday = this.feiertage.
-            return SachsenHoliday.isPresent();
-        }*/
     }
 

@@ -11,11 +11,11 @@ public class Day {
     public String Label;
     public String Colour; //should prob be private, change after constructor bug is fixed
 
-    private Holidays holidayManager = new Holidays (year);
+    private Holidays holidayManager;
     static private SVGFormatter svgFormatter = new SVGFormatter();
 
     public Day (LocalDate date) {
-
+        this.holidayManager = new Holidays (date.getYear());
         this.day = date.getDayOfMonth();
         this.month = date.getMonthValue();
 
@@ -36,12 +36,13 @@ public class Day {
 
         //determines if it is a holiday and a weekend day
         String fillColour = !holidayManager.isHoliday(date)  ? whiteHex : mediumBlueHex;
-        fillColour = holidayManager.feiertage.contains(date) ? lightBlueHex : fillColour;
+        fillColour = holidayManager.holidays.contains(date) ? lightBlueHex : fillColour;
         fillColour = (date.getDayOfWeek().getValue() == 6 ||  date.getDayOfWeek().getValue() == 7) ? mediumBlueHex : fillColour;
         return fillColour;
     }
 
     private String generateLabel (LocalDate date){
+        //TODO check if holiday and if true add string from hashmap to lower right corner
         String darkBlueText = "#00457c";
 
         //style for day Month and weekday/-end name
@@ -62,7 +63,7 @@ public class Day {
         //adds a 0 before number if it is smaller than 10 for consistency
         if (displayedDate<10) {
             String dateSmallerTen = "0" + displayedDate;
-            sb.append("<text x=\"").append(xDate).append("\" y=\"").append(yDate).append("\" font-family=" + svgFormatter.Verdana + "font-size=\"26,6px\" font-weight=\"bold\" fill=\"").append(darkBlueText).append("\">").append(dateSmallerTen).append("</text>");
+            sb.append("<text x=\"").append(xDate).append("\" y=\"").append(yDate).append("\" font-family= \"Verdana;-inkscape-font-specification:'Verdana, Bold'\" font-size=\"26,6px\" font-weight=\"bold\" fill=\"").append(darkBlueText).append("\">").append(dateSmallerTen).append("</text>");
         }
         else{
             sb.append("<text x=\"").append(xDate).append("\" y=\"").append(yDate).append("\" font-family=\"Verdana;-inkscape-font-specification:'Verdana, Bold'\" font-size=\"26,6px\" font-weight=\"bold\" fill=\"").append(darkBlueText).append("\">").append(displayedDate).append("</text>");
@@ -78,7 +79,7 @@ public class Day {
 
         sb.append("<g>");
         sb.append("<rect ");
-        sb.append("style=\" fill:").append(this.Colour).append(svgFormatter.fillElements);
+        sb.append("style=\" fill:").append(this.Colour).append(";fill-opacity:1;stroke:#000000;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1\"");
         sb.append(" x=\"").append(x).append("\"");
         sb.append(" y=\"").append(y).append("\"");
         sb.append(" width=\"").append(width).append("\"");

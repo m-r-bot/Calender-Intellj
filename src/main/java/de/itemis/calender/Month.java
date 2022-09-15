@@ -11,14 +11,12 @@ public class Month {
     private final int currentX; //apparently those fields aren't actually used
     private final boolean sameYear;
     static private SVGFormatter svgFormatter = new SVGFormatter();
-    // TODO figure out how variables were differently declared in MonthPainter class, month and currentX are supposed to be a reference to Calender class
 
     public Month( YearMonth month, int currentX, boolean sameYear) {
         this.monthField = month;
         this.currentX = currentX;
         this.sameYear = sameYear;
     }
-
 
     private String generateMonthHeader(LocalDate date){
         int yMHeader = -265;
